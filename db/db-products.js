@@ -1,4 +1,4 @@
-const collection = [];
+const collection = ['You got the product collection'];
 
 function all() {
   return collection;
