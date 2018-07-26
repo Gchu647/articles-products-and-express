@@ -9,8 +9,10 @@ router.get('/', (req, res) => {
 
 // call up the products.js
 // Inside the product.js it will use an add method and put the product object into collections in database
-router.post('/', (req, res) => {
-  res.send('we can post stuff');
+router.post('/:id', (req, res) => {
+  const id = req.params.id;
+  products.add(id);
+  res.send(`We added ${id}`);
 })
 
 module.exports = router;
