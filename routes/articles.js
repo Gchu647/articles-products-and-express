@@ -1,4 +1,4 @@
-var articles = require('db/articles.js');
+var articles = require('./db/db-articles.js');
 
 // returns the entire collection
 articles.all();
