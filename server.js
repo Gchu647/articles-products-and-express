@@ -4,25 +4,21 @@ const app = express();
 
 const PORT = process.env.PORT || 8060;
 
+/*
 app.engine('.hbs', exphbs({
   defaultLayout: 'main',
   extname: '.hbs'
 }));
-
 app.set('view engine', '.hbs');
+*/
 
-app.get('/', (req, res) => {
-  const locals = {
-    title: 'devleague',
-    greetings: 'Aloha',
-    showContent: true,
-    collection: [
-      'puffins',
-      'penguins',
-      'pidgeons'
-    ]
-  };
-  res.render('home', locals);
+app.post('/products', (req, res) => {
+  // call up the products.js
+  // Inside the product.js it will use an add method and put the product object into collections in database
+});
+
+app.get('/products', (req, res) => {
+  // This will for now return a collection of products
 });
 
 
