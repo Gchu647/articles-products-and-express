@@ -1,6 +1,7 @@
 const express = require('express'); 
 const router = express.Router();
 const bodyParser = require('body-parser');
+const exphbs = require('express-handlebars');
 const products = require('../db/db-products');
 
 router.use(bodyParser.urlencoded({extended: true }));
