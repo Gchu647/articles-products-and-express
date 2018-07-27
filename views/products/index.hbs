@@ -1,10 +1,8 @@
-<div class="products-parent">
+<h1>Products list</h1>
   {{#each collection}}
-  <div class="products">
-    <h2>{{name}}</h2>
-    <div>Id: {{id}}</div>
-    <div>Price: {{price}}</div>
-    <div>Inventory: {{inventory}}</div>
-  </div>
+  <ul class="products">
+    <li>{{name}}</li>
+    <li>Id: {{id}}</li>
+  </ul>
   {{/each}}
 </div>

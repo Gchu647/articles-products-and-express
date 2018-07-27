@@ -7,10 +7,28 @@ const productReqCheck = require('../middleware/productReqCheck');
 
 router.use(bodyParser.urlencoded({extended: true }));
 
-// this will for now return a collection of products
+// this will return a collection of products
 router.get('/', (req, res) => {
   const collection = products.all();
   res.render('products/index', {collection: collection});
+});
+
+// FIX GET ID, it is not finding matching id???
+// this will return a specific product
+router.get('/:id', (req, res) => {
+  const id = req.params.id;
+  const collection = products.all();
+  const matchIndex = collection.findIndex(element => {
+    return Number(element.id) === Number(id);
+  });
+
+  if(matchIndex === -1) {
+    res.status(404).send('Item not found!');
+  } else {
+    const productInfo =  products.fetchByIndex(matchIndex);
+    console.log(productInfo);
+    res.render('products/product',productInfo);
+  }
 });
 
 // adds a new product to our collection after the product is validated
@@ -21,13 +39,12 @@ router.post('/', productReqCheck, (req, res) => {
 
 // make changes to a prduct after the id is validated
 router.put('/:id', productReqCheck, (req, res) => {
-  const collection = products.all();
   const id = req.params.id;
+  const collection = products.all();
   const matchIndex = collection.findIndex(element => {
     return Number(element.id) === Number(req.body.id);
   });
 
-  console.log('MatchIndex: ', matchIndex);
   if(matchIndex === -1) {
     res.status(404).send('Item not found!');
   } else {

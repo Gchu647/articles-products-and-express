@@ -1,6 +1,4 @@
 productReqCheck = function(req, res, next) {
-  console.log("Product Check: ", req.method);
-
   const idCheck = (req.body.id && !isNaN(req.body.id));
   const nameCheck = (req.body.name && typeof req.body.name === 'string');
   const priceCheck = (req.body.price && !isNaN(req.body.price));
