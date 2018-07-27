@@ -8,7 +8,8 @@ router.use(bodyParser.urlencoded({extended: true }));
 
 // this will for now return a collection of products
 router.get('/', (req, res) => {
-  res.send(products.all());
+  let collection = products.all();
+  res.render('products/index', {collection: collection});
 });
 
 // Our put method can find the index to database

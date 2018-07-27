@@ -1,4 +1,4 @@
-const collection = ['Avocado'];
+const collection = [];
 
 function all() {
   return collection;

@@ -4,21 +4,16 @@ const app = express();
 const products = require('./routes/products.js');
 const PORT = process.env.PORT || 8060;
 
-// Use the products
-app.use('/products',products);
-
-//Handle bar testing
+//Set handlebar
 app.engine('.hbs', exphbs({
   defaultLayout: 'main',
   extname: '.hbs'
 }));
 app.set('view engine', '.hbs');
+//-------------------------------
 
-app.get('/handletest', (req, res) => {
-  res.render('home', {
-    greetings: 'Aloha'
-  });
-});
+// Use the products
+app.use('/products',products);
 
 
 
