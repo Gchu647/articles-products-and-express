@@ -27,11 +27,15 @@ router.put('/:id', productReqCheck, (req, res) => {
     return Number(element.id) === Number(req.body.id);
   });
 
-  collection[matchIndex].name = req.body.name;
-  collection[matchIndex].price = parseFloat(req.body.price);
-  collection[matchIndex].inventory = parseFloat(req.body.inventory);
-
-  res.send(`You made changes to item id: ${id}`);
+  console.log('MatchIndex: ', matchIndex);
+  if(matchIndex === -1) {
+    res.status(404).send('Item not found!');
+  } else {
+    collection[matchIndex].name = req.body.name;
+    collection[matchIndex].price = parseFloat(req.body.price);
+    collection[matchIndex].inventory = parseFloat(req.body.inventory);
+    res.send(`You made changes to item id: ${id}`); 
+  }
 });
 
 module.exports = router;
