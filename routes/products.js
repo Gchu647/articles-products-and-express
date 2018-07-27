@@ -8,19 +8,23 @@ router.use(bodyParser.urlencoded({extended: true }));
 
 // this will for now return a collection of products
 router.get('/', (req, res) => {
-  let collection = products.all();
+  const collection = products.all();
   res.render('products/index', {collection: collection});
 });
 
 // Our put method can find the index to database
-router.put('/', (req, res) => {
-  let collection = products.all();
+router.put('/:id', (req, res) => {
+  const collection = products.all();
 
-  collection.forEach((element, index) => {    
-    if(element.id === Number(req.body.id)) {
-      res.send('we found a matching ID!');
-    }
+  const matchIndex = collection.findIndex(element => {
+    return Number(element.id) === Number(req.body.id);
   });
+
+  // Add if statments
+  collection[matchIndex].name = req.body.name;
+  collection[matchIndex].price = parseFloat(req.body.price);
+  collection[matchIndex].inventory = parseFloat(req.body.inventory);
+  res.send("we put something!");
 })
 
 // adds a new product to our collection after the product is validated
