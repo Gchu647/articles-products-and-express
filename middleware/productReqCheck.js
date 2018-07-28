@@ -4,19 +4,29 @@ productReqCheck = function(req, res, next) {
   const priceCheck = (req.body.price && !isNaN(req.body.price));
   const inventoryCheck = (req.body.inventory && !isNaN(req.body.inventory));
 
+  res.inputError = {'errorMessage': ''};
+
   if(req.method === 'POST' && idCheck) {
-    res.status(400).send('Ids are automatically generated');
-  } else if (req.method === 'PUT' && !idCheck) {
-    res.status(400).send('Needs proper id key and value');
-  } else if(!nameCheck) {
-    res.status(400).send('Needs proper name key and value');
-  } else if(!priceCheck) {
-    res.status(400).send('Needs proper price key and value');
-  } else if (!inventoryCheck) {
-    res.status(400).send('Needs proper inventory key and value');
-  } else {
-    next();
+    res.inputError.errorMessage += ' • Ids are automatically generated \r\n';
   }
+  
+  if (req.method === 'PUT' && !idCheck) {
+    res.inputError.errorMessage += ' • Needs proper id key and value \r\n';
+  }
+  
+  if(!nameCheck) {
+    res.inputError.errorMessage += ' • Needs proper name key and value \r\n';
+  } 
+  
+  if(!priceCheck) {
+    res.inputError.errorMessage += ' • Needs proper price key and value \r\n';
+  }  
+  
+  if (!inventoryCheck) {
+    res.inputError.errorMessage += ' • Needs proper invetory key and value \r\n';
+  }
+
+  next();
 }
 
 module.exports = productReqCheck;

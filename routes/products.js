@@ -28,19 +28,28 @@ router.get('/:id', (req, res) => {
 
 // adds a new product to our collection after the product is validated
 router.post('/', productReqCheck, (req, res) => {
-  products.add(req.body);
-  res.send(`We added ${req.body.name}`);
+  if(res.inputError.errorMessage.length === 0) { // initial error check
+    products.add(req.body);
+    res.send(`We added ${req.body.name}`);
+  } else {
+    res.status(400).send(res.inputError.errorMessage);
+  }
 });
 
 // make changes to a prduct after the id is validated
 router.put('/:id', productReqCheck, (req, res) => {
   const id = req.params.id;
-  let editCheck = products.edit(req.body);
 
-  if(editCheck) {
-    res.send(`You made changes to item id: ${id}`); 
+  if(res.inputError.errorMessage.length === 0) { // initial error check
+    let editCheck = products.edit(req.body); // attempt to edit product
+
+    if(editCheck) {
+      res.send(`You made changes to item id: ${id}`); 
+    } else {
+      res.status(404).send('Item not found!');
+    }
   } else {
-    res.status(404).send('Item not found!');
+    res.status(400).send(res.inputError.errorMessage);
   }
 });
 
