@@ -21,7 +21,7 @@ app.use('/products',products);
 
 //-------------------------------
 app.get('*', (req, res) => {
-  res.send('Didnt find route');
+  res.send('Didnt find route'); //Send them to a static 404 page LATER.
 });
 
 app.use(function(err, req, res, next) {

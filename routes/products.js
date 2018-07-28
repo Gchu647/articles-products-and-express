@@ -25,7 +25,6 @@ router.get('/:id', (req, res) => {
     res.status(404).send('Item not found!');
   } else {
     const productInfo =  products.fetchByIndex(matchIndex);
-    console.log(productInfo);
     res.render('products/product',productInfo);
   }
 });
@@ -39,18 +38,12 @@ router.post('/', productReqCheck, (req, res) => {
 // make changes to a prduct after the id is validated
 router.put('/:id', productReqCheck, (req, res) => {
   const id = req.params.id;
-  const collection = products.all();
-  const matchIndex = collection.findIndex(element => {
-    return Number(element.id) === Number(req.body.id);
-  });
+  let editCheck = products.edit(req.body);
 
-  if(matchIndex === -1) {
-    res.status(404).send('Item not found!');
-  } else {
-    collection[matchIndex].name = req.body.name;
-    collection[matchIndex].price = parseFloat(req.body.price);
-    collection[matchIndex].inventory = parseFloat(req.body.inventory);
+  if(editCheck) {
     res.send(`You made changes to item id: ${id}`); 
+  } else {
+    res.status(404).send('Item not found!');
   }
 });
 

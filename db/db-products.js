@@ -10,6 +10,16 @@ function all() {
   return collection;
 }
 
+/* works with GET /product/id
+function fetchByIndex(index) {
+  return collection[index];
+}
+*/
+
+function fetch() {
+  // Working on new fetch index
+}
+
 // works with POST /product
 function add (obj) {
   product = {};
@@ -21,16 +31,27 @@ function add (obj) {
   collection.push(product);
 }
 
-// works with GET /product/id
-function fetchByIndex(index) {
-  return collection[index];
+function edit (obj) {
+  const matchIndex = collection.findIndex(element => {
+    return Number(element.id) === Number(obj.id);
+  });
+
+  if(matchIndex === -1) {
+    return false;
+  } else {
+    collection[matchIndex].name = obj.name;
+    collection[matchIndex].price = parseFloat(obj.price);
+    collection[matchIndex].inventory = parseFloat(obj.inventory);
+    
+    return true; 
+  }
 }
 
 module.exports = {
   all: all,
   add: add,
-  fetchByIndex: fetchByIndex
-  // edit: edit
+  fetchByIndex: fetchByIndex,
+  edit: edit
   // getByTitle: _getByTitle,
   // editByTitle: _editByTitle
 };
