@@ -1,7 +1,8 @@
 const collection = [];
+let currentID = 0;
 
 function generateID() {
-  return Math.floor((Math.random() * 100) + 1); 
+  return currentID += 1; 
 }
 
 // Works with GET /product

@@ -13,7 +13,6 @@ router.get('/', (req, res) => {
   res.render('products/index', {collection: collection});
 });
 
-// FIX GET ID, it is not finding matching id???
 // this will return a specific product
 router.get('/:id', (req, res) => {
   const id = req.params.id;
