@@ -4,3 +4,13 @@
   <div>Price: {{price}}</div>
   <div>Inventory: {{inventory}}</div>
 </div>
+<br>
+<!--need to be id/edit later-->
+<form action="/products/edit" method="GET">
+  <input type='submit' value='Edit'>
+</form>
+<br>
+<form action="/products/{{id}}?_method=DELETE" method="POST">
+  <input type='submit' value='Delete'>
+</form>
+
