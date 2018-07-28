@@ -16,16 +16,13 @@ router.get('/', (req, res) => {
 // this will return a specific product
 router.get('/:id', (req, res) => {
   const id = req.params.id;
-  const collection = products.all();
-  const matchIndex = collection.findIndex(element => {
-    return Number(element.id) === Number(id);
-  });
+  const fetchedProduct = products.fetchById(id);
+  console.log(fetchedProduct);
 
-  if(matchIndex === -1) {
+  if(fetchedProduct) {
+    res.render('products/product',fetchedProduct);
+  } else{
     res.status(404).send('Item not found!');
-  } else {
-    const productInfo =  products.fetchByIndex(matchIndex);
-    res.render('products/product',productInfo);
   }
 });
 

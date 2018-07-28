@@ -5,19 +5,22 @@ function generateID() {
   return currentID += 1; 
 }
 
-// Works with GET /product
+// works with GET /product
 function all() {
   return collection;
 }
 
-/* works with GET /product/id
-function fetchByIndex(index) {
-  return collection[index];
-}
-*/
+// fetches a product by its id
+function fetchById(id) {
+  const matchIndex = collection.findIndex(element => {
+    return Number(element.id) === Number(id);
+  });
 
-function fetch() {
-  // Working on new fetch index
+  if(matchIndex === -1) {
+    return null;
+  } else {
+    return collection[matchIndex];
+  }
 }
 
 // works with POST /product
@@ -31,6 +34,7 @@ function add (obj) {
   collection.push(product);
 }
 
+// Works with PUT to change the properties of a product id
 function edit (obj) {
   const matchIndex = collection.findIndex(element => {
     return Number(element.id) === Number(obj.id);
@@ -50,7 +54,7 @@ function edit (obj) {
 module.exports = {
   all: all,
   add: add,
-  fetchByIndex: fetchByIndex,
+  fetchById: fetchById,
   edit: edit
   // getByTitle: _getByTitle,
   // editByTitle: _editByTitle
