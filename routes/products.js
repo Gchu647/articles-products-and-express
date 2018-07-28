@@ -13,6 +13,11 @@ router.get('/', (req, res) => {
   res.render('products/index', {collection: collection});
 });
 
+// open the page to add products
+router.get('/new', (req, res) => {
+  res.render('products/new');
+})
+
 // this will return a specific product
 router.get('/:id', (req, res) => {
   const id = req.params.id;
