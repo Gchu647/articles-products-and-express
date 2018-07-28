@@ -51,11 +51,25 @@ function edit (obj) {
   }
 }
 
+function remove (id) {
+  const matchIndex = collection.findIndex(element => {
+    return Number(element.id) === Number(id);
+  });
+
+  console.log('match index: ', matchIndex);
+
+  if(matchIndex === -1) {
+    return false;
+  } else {
+    collection.splice(matchIndex, 1);
+    return true;
+  }
+}
+
 module.exports = {
   all: all,
   add: add,
   fetchById: fetchById,
-  edit: edit
-  // getByTitle: _getByTitle,
-  // editByTitle: _editByTitle
+  edit: edit,
+  remove: remove
 };

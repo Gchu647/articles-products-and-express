@@ -1,11 +1,12 @@
 const express = require('express'); 
 const router = express.Router();
 const bodyParser = require('body-parser');
-const exphbs = require('express-handlebars');
+const methodOveride = require('method-override');
 const products = require('../db/db-products');
 const productReqCheck = require('../middleware/productReqCheck');
 
 router.use(bodyParser.urlencoded({extended: true }));
+router.use(methodOveride('_method'));
 
 // this will return a collection of products
 router.get('/', (req, res) => {
@@ -27,8 +28,6 @@ router.get('/edit', (req, res) => {
 router.get('/:id', (req, res) => {
   const id = req.params.id;
   const fetchedProduct = products.fetchById(id);
-  console.log('GET ID activated');
-  console.log(fetchedProduct);
 
   if(fetchedProduct) {
     res.render('products/product',fetchedProduct);
@@ -47,21 +46,32 @@ router.post('/', productReqCheck, (req, res) => {
   }
 });
 
+// make all the edit names to change
 // make changes to a prduct after the id is validated
 router.put('/:id', productReqCheck, (req, res) => {
-  const id = req.params.id;
-  console.log('PUT ID activated');
-
   if(res.inputError.errorMessage.length === 0) { // initial error check
     let editCheck = products.edit(req.body); // attempt to edit product
 
     if(editCheck) {
-      res.send(`You made changes to item id: ${id}`); 
+      res.redirect(`/products/${req.body.id}`); 
     } else {
       res.status(404).send('Item not found!');
     }
   } else {
     res.status(400).send(res.inputError.errorMessage);
+  }
+});
+
+// Only works on POSTMAN for now
+router.delete('/:id', (req, res) => {
+  const id = req.params.id;
+  const removeCheck = products.remove(id);
+  console.log(removeCheck)
+
+  if(removeCheck) {
+    res.redirect('/products'); 
+  } else {
+    res.status(404).send('Item not found!');
   }
 });
 
