@@ -18,10 +18,16 @@ router.get('/new', (req, res) => {
   res.render('products/new');
 })
 
+// TEMPORARY route
+router.get('/edit', (req, res) => {
+  res.render('products/edit');
+})
+
 // this will return a specific product
 router.get('/:id', (req, res) => {
   const id = req.params.id;
   const fetchedProduct = products.fetchById(id);
+  console.log('GET ID activated');
   console.log(fetchedProduct);
 
   if(fetchedProduct) {
@@ -35,7 +41,7 @@ router.get('/:id', (req, res) => {
 router.post('/', productReqCheck, (req, res) => {
   if(res.inputError.errorMessage.length === 0) { // initial error check
     products.add(req.body);
-    res.send(`We added ${req.body.name}`);
+    res.redirect('/products');
   } else {
     res.status(400).send(res.inputError.errorMessage);
   }
@@ -44,6 +50,7 @@ router.post('/', productReqCheck, (req, res) => {
 // make changes to a prduct after the id is validated
 router.put('/:id', productReqCheck, (req, res) => {
   const id = req.params.id;
+  console.log('PUT ID activated');
 
   if(res.inputError.errorMessage.length === 0) { // initial error check
     let editCheck = products.edit(req.body); // attempt to edit product

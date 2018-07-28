@@ -28,8 +28,8 @@ function add (obj) {
   product = {};
   product.id = generateID();
   product.name = obj.name;
-  product.price = parseFloat(obj.price);
-  product.inventory = parseFloat(obj.inventory);
+  product.price = parseFloat(obj.price).toFixed(2);
+  product.inventory = parseFloat(obj.inventory).toFixed(0);
 
   collection.push(product);
 }
@@ -44,8 +44,8 @@ function edit (obj) {
     return false;
   } else {
     collection[matchIndex].name = obj.name;
-    collection[matchIndex].price = parseFloat(obj.price);
-    collection[matchIndex].inventory = parseFloat(obj.inventory);
+    collection[matchIndex].price = parseFloat(obj.price).toFixed(2);
+    collection[matchIndex].inventory = parseFloat(obj.inventory).toFixed(0);
     
     return true; 
   }
