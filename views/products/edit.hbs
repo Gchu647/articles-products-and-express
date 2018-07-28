@@ -1,17 +1,17 @@
 <h1>Edit Product</h1>
 <!--have an if statement for DELETE -->
-<form action="/products/1000?_method=PUT" method="POST">
+<form action='/products/1000?_method=PUT' method='POST'>
     <label for='id'>Id:</label>
-    <input name='id' type='text' required>
+    <input name='id' type='text' value={{id}} required>
 
     <label for='name'>Name:</label>
-    <input name='name' type='text' required>
+    <input name='name' type='text' value={{name}} required>
 
     <label for='price'>Price:</label>
-    <input name='price' type='text' required>
+    <input name='price' type='text' value={{price}} required>
 
     <label for='inventory'>Inventory:</label>
-    <input name='inventory' type='text' required>
+    <input name='inventory' type='text' value={{inventory}} required>
 
     <input type='submit' value='Submit'>
 </form>

@@ -19,9 +19,10 @@ router.get('/new', (req, res) => {
   res.render('products/new');
 })
 
-// TEMPORARY route
-router.get('/edit', (req, res) => {
-  res.render('products/edit');
+// fixing TEMPORARY route
+router.get('/:id/edit', (req, res) => {
+  console.log(req.body);
+  res.render('products/edit', req.body);
 })
 
 // this will return a specific product

@@ -1,4 +1,4 @@
-<div class="products">
+<div class='products'>
   <h2>{{name}}</h2>
   <div>Id: {{id}}</div>
   <div>Price: {{price}}</div>
@@ -6,11 +6,15 @@
 </div>
 <br>
 <!--need to be id/edit later-->
-<form action="/products/edit" method="GET">
+<form action='/products/{{id}}/edit?_method=GET' method='POST'>
+  <input type='hidden' name='id' value={{id}}>
+  <input type='hidden' name='name' value={{name}}>
+  <input type='hidden' name='price' value={{price}}>
+  <input type='hidden' name='inventory' value={{inventory}}>
   <input type='submit' value='Edit'>
 </form>
 <br>
-<form action="/products/{{id}}?_method=DELETE" method="POST">
+<form action='/products/{{id}}?_method=DELETE' method='POST'>
   <input type='submit' value='Delete'>
 </form>
 
