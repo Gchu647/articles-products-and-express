@@ -2,6 +2,7 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const app = express();
 const products = require('./routes/products.js');
+const articles = require('./routes/articles.js');
 const PORT = process.env.PORT || 8060;
 
 //Set handlebar
@@ -10,16 +11,13 @@ app.engine('.hbs', exphbs({
   extname: '.hbs'
 }));
 app.set('view engine', '.hbs');
-//-------------------------------
 
-// Use the products
-app.use('/products',products);
+//--------- PRODUCTS & ARTICLES ROUTES-------------------------//
 
+app.use('/products', products);
+app.use('/articles', articles);
 
-
-
-
-//-------------------------------
+//--------------------------------------------------------------------//
 app.get('*', (req, res) => {
   res.send('Didnt find route'); //Send them to a static 404 page LATER.
 });

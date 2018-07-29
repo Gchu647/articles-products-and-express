@@ -1,15 +1,27 @@
-var articles = require('./db/db-articles.js');
+const express = require('express'); 
+const router = express.Router();
+const bodyParser = require('body-parser');
+const methodOveride = require('method-override');
+const articles = require('../db/db-articles');
 
-// returns the entire collection
-articles.all();
+router.use(bodyParser.urlencoded({extended: true }));
+router.use(methodOveride('_method'));
 
-// adds a new article to the collection
-articles.add({});
+// this will return a collection of articles
+router.get('/', (req, res) => {
+  const collection = articles.all();
+  res.render('articles/index', {collection: collection});
+});
 
-// returns the correct object from the collection
-articles.getByTitle('The%20Best%20Magpie%20Developer%20of%202016');
+// open the page to add articles
+router.get('/new', (req, res) => {
+  res.render('articles/new');
+})
 
-// finds an article in the collection by its title, if found - updates the article based on object passed as the second parameter then returns `true`
-// in the example below, it would change the title.
-// if the article is not found, returns `false`
-articles.editByTitle('The%20Best%20Magpie%20Developer%20of%202016', { title: "..."});
+// add VALIDATION check
+router.post('/', (req, res) => {
+  articles.add(req.body);
+  res.redirect('/products');
+});
+
+module.exports = router;

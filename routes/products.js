@@ -67,7 +67,6 @@ router.put('/:id', productReqCheck, (req, res) => {
 router.delete('/:id', (req, res) => {
   const id = req.params.id;
   const removeCheck = products.remove(id);
-  console.log('deleting Id-' + id);
 
   if(removeCheck) {
     res.redirect('/products'); 
