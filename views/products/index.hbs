@@ -1,14 +1,13 @@
 <h1>Products list</h1>
-  <form action='/products/new' method='GET'>
-    <input type='submit' value='add new item'>
-  </form>
-  <br>
-  <br>
-  <div class="products">
-  {{#each collection}}
-    <div>
-      <a href="/products/{{id}}"><font size="5">{{name}}: id-{{id}}</font></a>
-    </div>
-  {{/each}}
+<form action='/products/new' method='GET'>
+  <input type='submit' value='add new item'>
+</form>
+<br>
+<br>
+<div class="products">
+{{#each collection}}
+  <div>
+    <a href="/products/{{id}}"><font size="5">{{name}}: id-{{id}}</font></a>
   </div>
+{{/each}}
 </div>

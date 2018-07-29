@@ -1,16 +1,13 @@
 <h1>Article list</h1>
-  <!--
-  <form action='/products/new' method='GET'>
-    <input type='submit' value='add new item'>
-  </form>
-  <br>
-  <br>
-  -->
-  <div class="products">
+<form action='/articles/new' method='GET'>
+  <input type='submit' value='add new article'>
+</form>
+<br>
+<br>
+<div class="products">
   {{#each collection}}
     <div>
       <a href="/articles/{{urlTitle}}"><font size="5">{{title}}</font></a>
     </div>
   {{/each}}
-  </div>
-</div>
+ </div>

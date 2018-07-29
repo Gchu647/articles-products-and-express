@@ -61,7 +61,7 @@ router.put('/:id', productReqCheck, (req, res) => {
   }
 });
 
-// Only works on POSTMAN for now
+// Deletes product by id
 router.delete('/:id', (req, res) => {
   const id = req.params.id;
   const removeCheck = products.remove(id);

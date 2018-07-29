@@ -42,9 +42,24 @@ function edit (obj) {
   }
 }
 
+// WORKING on this
+function remove (title) {
+  const matchIndex = collection.findIndex(element => {
+    return element.title === title;
+  });
+
+  if(matchIndex === -1) {
+    return false;
+  } else {
+    collection.splice(matchIndex, 1);
+    return true;
+  }
+}
+
 module.exports = {
   all: all,
   add: add,
   edit: edit,
+  remove: remove,
   fetchByTitle: fetchByTitle
 };

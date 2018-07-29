@@ -42,14 +42,25 @@ router.post('/', (req, res) => {
 });
 
 // add VALIDATION check
-router.put('/:title', (req, res) => {
-  console.log('Putting ', req.body)
+router.put('/:id', (req, res) => {
   let editCheck = articles.edit(req.body); // attempt to edit articles
 
   if(editCheck) {
     res.redirect(`/articles/${req.body.urlTitle}`);
   } else {
-    res.status(404).send('Item not found!');
+    res.status(404).send('Article not found!');
+  }
+});
+
+// WORKING on this!
+router.delete('/:id', (req, res) => {
+  const title = req.params.id;
+  const removeCheck = articles.remove(title);
+
+  if(removeCheck) {
+    res.redirect('/articles');
+  } else {
+    res.status(404).send('Article not found!');
   }
 });
 

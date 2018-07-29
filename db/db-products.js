@@ -56,8 +56,6 @@ function remove (id) {
     return Number(element.id) === Number(id);
   });
 
-  console.log('match index: ', matchIndex);
-
   if(matchIndex === -1) {
     return false;
   } else {
