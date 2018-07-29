@@ -19,7 +19,7 @@ router.get('/new', (req, res) => {
   res.render('products/new');
 })
 
-// fixing TEMPORARY route
+//edit the properties of specific product
 router.get('/:id/edit', (req, res) => {
   console.log(req.body);
   res.render('products/edit', req.body);

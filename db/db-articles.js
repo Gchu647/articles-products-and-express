@@ -1,7 +1,19 @@
-const collection = [{title: 'Make Your Bed', body: '......', author: 'William H. McRaven '}];
+const collection = [];
 
 function all() {
   return collection;
+}
+
+function fetchByTitle(title) {
+  const matchIndex = collection.findIndex(element => {
+    return element.title === title;
+  });
+
+  if(matchIndex === -1) {
+    return null;
+  } else {
+    return collection[matchIndex];
+  }
 }
 
 function add (obj) {
@@ -9,13 +21,13 @@ function add (obj) {
   article.title = obj.title;
   article.body = obj.body;
   article.author = obj.author;
-  article.urlTitle = obj.title.split(' ').join('%');
+  article.urlTitle = obj.title.split(' ').join('%20');
+  console.log('Added ', article.urlTitle);
   collection.push(article);
 }
 
 module.exports = {
   all: all,
-  add: add
-  // getByTitle: _getByTitle,
-  // editByTitle: _editByTitle
+  add: add,
+  fetchByTitle: fetchByTitle
 };

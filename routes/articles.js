@@ -16,12 +16,25 @@ router.get('/', (req, res) => {
 // open the page to add articles
 router.get('/new', (req, res) => {
   res.render('articles/new');
-})
+});
+
+// fetches a article based on the title
+router.get('/:id', (req, res) => {
+  const title = req.params.id;
+  const fetchedArticle = articles.fetchByTitle(title);
+  console.log('get ', title);
+
+  if(fetchedArticle) {
+    res.render('articles/article',fetchedArticle);
+  } else{
+    res.status(404).send('Article not found!');
+  }
+});
 
 // add VALIDATION check
 router.post('/', (req, res) => {
   articles.add(req.body);
-  res.redirect('/products');
+  res.redirect('/articles');
 });
 
 module.exports = router;
