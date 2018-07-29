@@ -19,9 +19,8 @@ router.get('/new', (req, res) => {
   res.render('products/new');
 })
 
-//edit the properties of specific product
+// edit the properties of specific product
 router.get('/:id/edit', (req, res) => {
-  console.log(req.body);
   res.render('products/edit', req.body);
 })
 
@@ -47,8 +46,7 @@ router.post('/', productReqCheck, (req, res) => {
   }
 });
 
-// make all the edit names to change
-// make changes to a prduct after the id is validated
+// edits a prduct after the id is validated
 router.put('/:id', productReqCheck, (req, res) => {
   if(res.inputError.errorMessage.length === 0) { // initial error check
     let editCheck = products.edit(req.body); // attempt to edit product

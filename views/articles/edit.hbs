@@ -1,0 +1,14 @@
+<h1>Edit Article</h1>
+
+<!--<form action='/article/1000?_method=PUT' method='POST'>-->
+<form>
+    <label for='title'>Title: </label>
+    <input name='title' type='text' value={{title}} required>
+    <label for='author'>Author: </label>
+    <input name='author' type='text' value={{author}} required>
+    <br><br>
+    <textarea name='body' rows="10" cols="60" required>{{body}}</textarea>
+    <br><br>
+    <input type='hidden' name='urlTitle' value={{urlTitle}}>
+    <input type='submit' value='Submit'>
+</form>

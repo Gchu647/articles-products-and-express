@@ -22,8 +22,25 @@ function add (obj) {
   article.body = obj.body;
   article.author = obj.author;
   article.urlTitle = obj.title.split(' ').join('%20');
-  console.log('Added ', article.urlTitle);
   collection.push(article);
+}
+
+// WORKING ON THIS
+function edit (obj) {
+  const matchIndex = collection.findIndex(element => {
+    return element.title === obj.title;
+  });
+
+  if(matchIndex === -1) {
+    return false;
+  } else {
+    collection[matchIndex].title = obj.title;
+    collection[matchIndex].body = obj.body;
+    collection[matchIndex].author = obj.author;
+    collecion[matchIndex].urlTitle = obj.title.split(' ').join('%20');
+    
+    return true; 
+  }
 }
 
 module.exports = {

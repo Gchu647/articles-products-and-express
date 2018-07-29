@@ -18,6 +18,11 @@ router.get('/new', (req, res) => {
   res.render('articles/new');
 });
 
+// brings up the product editing page
+router.get('/:id/edit', (req, res) => {
+  res.render('articles/edit', req.body);
+});
+
 // fetches a article based on the title
 router.get('/:id', (req, res) => {
   const title = req.params.id;
@@ -31,10 +36,23 @@ router.get('/:id', (req, res) => {
   }
 });
 
+
+
 // add VALIDATION check
 router.post('/', (req, res) => {
   articles.add(req.body);
   res.redirect('/articles');
+});
+
+// WORKING on this
+router.put('/:id', productReqCheck, (req, res) => {
+  let editCheck = products.edit(req.body); // attempt to edit product
+
+  if(editCheck) {
+    res.redirect(`/articles/${req.body.urlTitle}`);
+  } else {
+    res.status(404).send('Item not found!');
+  }
 });
 
 module.exports = router;

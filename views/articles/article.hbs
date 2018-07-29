@@ -4,3 +4,10 @@
   <br>
   <div> {{body}}</div>
 </div>
+<br>
+<form action='/articles/{{urlTitle}}/edit?_method=GET' method='POST'>
+  <input type='hidden' name='title' value='{{title}}'>
+  <input type='hidden' name='author' value='{{author}}'>
+  <input type='hidden' name='body' value='{{body}}'>
+  <input type='submit' value='Edit'>
+</form>
