@@ -25,7 +25,6 @@ function add (obj) {
   collection.push(article);
 }
 
-// WORKING ON THIS
 function edit (obj) {
   const matchIndex = collection.findIndex(element => {
     return element.title === obj.title;
@@ -37,7 +36,7 @@ function edit (obj) {
     collection[matchIndex].title = obj.title;
     collection[matchIndex].body = obj.body;
     collection[matchIndex].author = obj.author;
-    collecion[matchIndex].urlTitle = obj.title.split(' ').join('%20');
+    collection[matchIndex].urlTitle = obj.title.split(' ').join('%20');
     
     return true; 
   }
@@ -46,5 +45,6 @@ function edit (obj) {
 module.exports = {
   all: all,
   add: add,
+  edit: edit,
   fetchByTitle: fetchByTitle
 };

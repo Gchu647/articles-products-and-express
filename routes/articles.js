@@ -27,7 +27,6 @@ router.get('/:id/edit', (req, res) => {
 router.get('/:id', (req, res) => {
   const title = req.params.id;
   const fetchedArticle = articles.fetchByTitle(title);
-  console.log('get ', title);
 
   if(fetchedArticle) {
     res.render('articles/article',fetchedArticle);
@@ -36,17 +35,16 @@ router.get('/:id', (req, res) => {
   }
 });
 
-
-
 // add VALIDATION check
 router.post('/', (req, res) => {
   articles.add(req.body);
   res.redirect('/articles');
 });
 
-// WORKING on this
-router.put('/:id', productReqCheck, (req, res) => {
-  let editCheck = products.edit(req.body); // attempt to edit product
+// add VALIDATION check
+router.put('/:title', (req, res) => {
+  console.log('Putting ', req.body)
+  let editCheck = articles.edit(req.body); // attempt to edit articles
 
   if(editCheck) {
     res.redirect(`/articles/${req.body.urlTitle}`);
