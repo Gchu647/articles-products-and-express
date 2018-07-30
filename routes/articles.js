@@ -3,6 +3,7 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const methodOveride = require('method-override');
 const articles = require('../db/db-articles');
+const payload = require('../middleware/payload');
 
 router.use(bodyParser.urlencoded({extended: true }));
 router.use(methodOveride('_method'));
@@ -35,20 +36,28 @@ router.get('/:id', (req, res) => {
   }
 });
 
-// add VALIDATION check
-router.post('/', (req, res) => {
-  articles.add(req.body);
-  res.redirect('/articles');
+// add a new article
+router.post('/', payload.articleReqCheck, (req, res) => {
+  if(res.inputError.errorMessage.length === 0) { 
+    articles.add(req.body);
+    res.redirect('/articles');
+  } else {
+    res.status(400).send(res.inputError.errorMessage);
+  }
 });
 
-// add VALIDATION check
-router.put('/:id', (req, res) => {
-  let editCheck = articles.edit(req.body); // attempt to edit articles
+// edit a specific article
+router.put('/:id', payload.articleReqCheck, (req, res) => {
+  if(res.inputError.errorMessage.length === 0) { 
+    let editCheck = articles.edit(req.body); // attempt to edit articles
 
-  if(editCheck) {
-    res.redirect(`/articles/${req.body.urlTitle}`);
+    if(editCheck) {
+      res.redirect(`/articles/${req.body.urlTitle}`);
+    } else {
+      res.status(404).send('Article not found!');
+    }
   } else {
-    res.status(404).send('Article not found!');
+    res.status(400).send(res.inputError.errorMessage);
   }
 });
 
@@ -63,24 +72,5 @@ router.delete('/:id', (req, res) => {
     res.status(404).send('Article not found!');
   }
 });
-
-// working on this
-function articleReqCheck(req, res, next) {
-  const titleCheck = (req.body.title && typeof req.body.title === 'string');
-  const bodyCheck = (req.body.body && typeof req.body.body === 'string');
-  const authorCheck = (req.body.author && typeof req.body.author === 'string');
-
-  if(!titleCheck) {
-    res.inputError.errorMessage += ' • Needs proper title key and value \r\n';
-  } 
-  
-  if(!bodyCheck) {
-    res.inputError.errorMessage += ' • Needs proper body key and value \r\n';
-  }  
-  
-  if (!authorCheck) {
-    res.inputError.errorMessage += ' • Needs proper author key and value \r\n';
-  }
-}
 
 module.exports = router;

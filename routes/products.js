@@ -3,7 +3,7 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const methodOveride = require('method-override');
 const products = require('../db/db-products');
-const productReqCheck = require('../middleware/productReqCheck');
+const payload = require('../middleware/payload');
 
 router.use(bodyParser.urlencoded({extended: true }));
 router.use(methodOveride('_method'));
@@ -37,7 +37,7 @@ router.get('/:id', (req, res) => {
 });
 
 // adds a new product to our collection after the product is validated
-router.post('/', productReqCheck, (req, res) => {
+router.post('/', payload.productReqCheck, (req, res) => {
   if(res.inputError.errorMessage.length === 0) { // initial error check
     products.add(req.body);
     res.redirect('/products');
@@ -47,7 +47,7 @@ router.post('/', productReqCheck, (req, res) => {
 });
 
 // edits a prduct after the id is validated
-router.put('/:id', productReqCheck, (req, res) => {
+router.put('/:id', payload.productReqCheck, (req, res) => {
   if(res.inputError.errorMessage.length === 0) { // initial error check
     let editCheck = products.edit(req.body); // attempt to edit product
 
