@@ -52,7 +52,7 @@ router.put('/:id', (req, res) => {
   }
 });
 
-// WORKING on this!
+// deletes specific product
 router.delete('/:id', (req, res) => {
   const title = req.params.id;
   const removeCheck = articles.remove(title);
@@ -63,5 +63,24 @@ router.delete('/:id', (req, res) => {
     res.status(404).send('Article not found!');
   }
 });
+
+// working on this
+function articleReqCheck(req, res, next) {
+  const titleCheck = (req.body.title && typeof req.body.title === 'string');
+  const bodyCheck = (req.body.body && typeof req.body.body === 'string');
+  const authorCheck = (req.body.author && typeof req.body.author === 'string');
+
+  if(!titleCheck) {
+    res.inputError.errorMessage += ' • Needs proper title key and value \r\n';
+  } 
+  
+  if(!bodyCheck) {
+    res.inputError.errorMessage += ' • Needs proper body key and value \r\n';
+  }  
+  
+  if (!authorCheck) {
+    res.inputError.errorMessage += ' • Needs proper author key and value \r\n';
+  }
+}
 
 module.exports = router;
