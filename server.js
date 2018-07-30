@@ -19,7 +19,10 @@ app.use('/articles', articles);
 
 //--------------------------------------------------------------------//
 app.get('*', (req, res) => {
-  res.send('Didnt find route'); //Send them to a static 404 page LATER.
+  res.status(404).render('404',{
+    'showNote': true,
+    'note': 'Note: Wrong Route!'
+  });
 });
 
 app.use(function(err, req, res, next) {
