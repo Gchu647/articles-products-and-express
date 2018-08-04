@@ -1,9 +1,14 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
 const app = express();
+const bodyParser = require('body-parser');
+const methodOveride = require('method-override');
 const products = require('./routes/products.js');
 const articles = require('./routes/articles.js');
 const PORT = process.env.PORT || 8060;
+
+app.use(bodyParser.urlencoded({extended: true }));
+app.use(methodOveride('_method'));
 
 //Set handlebar
 app.engine('.hbs', exphbs({

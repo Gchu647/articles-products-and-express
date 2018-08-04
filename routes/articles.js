@@ -1,12 +1,7 @@
 const express = require('express'); 
 const router = express.Router();
-const bodyParser = require('body-parser');
-const methodOveride = require('method-override');
 const articles = require('../db/db-articles');
 const payload = require('../middleware/payload');
-
-router.use(bodyParser.urlencoded({extended: true }));
-router.use(methodOveride('_method'));
 
 // this will return a collection of articles
 router.get('/', (req, res) => {
