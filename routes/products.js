@@ -1,71 +1,43 @@
 const express = require('express'); 
 const router = express.Router();
-const products = require('../db/db-products');
+// const products = require('../db/db-products');
 const payload = require('../middleware/payload');
+const knex = require('../db/knex');
 
 // this will return a collection of products
 router.get('/', (req, res) => {
-  const collection = products.all();
-  res.render('products/index', {collection: collection});
+  knex('products').select('*')
+    .then(products => {
+      res.render('products/index', {collection: products});
+    })
+    .catch(err => res.status(400).send(err));
 });
 
-// open the page to add products
-router.get('/new', (req, res) => {
-  res.render('products/new');
-})
+// Working on this
+router.get('/:product_id', (req, res) => {
+  const id = req.params.product_id;
+  knex('products').where('id', id)
+    .then(fetchedProduct => {
+      res.render('products/product', fetchedProduct[0]);
+    })
+    .catch(err => res.status(400).send(err));
 
-// edit the properties of specific product
-router.get('/:id/edit', (req, res) => {
-  res.render('products/edit', req.body);
-})
-
-// this will return a specific product
-router.get('/:id', (req, res) => {
-  const id = req.params.id;
-  const fetchedProduct = products.fetchById(id);
-
-  if(fetchedProduct) {
-    res.render('products/product',fetchedProduct);
-  } else{
-    res.status(404).send('Item not found!');
-  }
 });
 
-// adds a new product to our collection after the product is validated
+// add a new product to our collection after the product is validated
 router.post('/', payload.productReqCheck, (req, res) => {
-  if(res.inputError.errorMessage.length === 0) { // initial error check
-    products.add(req.body);
+  //Need to catch payload error
+  const products = {
+    'name': req.body.name,
+    'price': parseFloat(req.body.price),
+    'inventory': parseInt(req.body.inventory)
+  };
+
+  knex('products').insert(products)
+  .then(() => {
     res.redirect('/products');
-  } else {
-    res.status(400).send(res.inputError.errorMessage);
-  }
-});
-
-// edits a prduct after the id is validated
-router.put('/:id', payload.productReqCheck, (req, res) => {
-  if(res.inputError.errorMessage.length === 0) { // initial error check
-    let editCheck = products.edit(req.body); // attempt to edit product
-
-    if(editCheck) {
-      res.redirect(`/products/${req.body.id}`); 
-    } else {
-      res.status(404).send('Item not found!');
-    }
-  } else {
-    res.status(400).send(res.inputError.errorMessage);
-  }
-});
-
-// Deletes product by id
-router.delete('/:id', (req, res) => {
-  const id = req.params.id;
-  const removeCheck = products.remove(id);
-
-  if(removeCheck) {
-    res.redirect('/products'); 
-  } else {
-    res.status(404).send('Item not found!');
-  }
+  })
+  .catch(err => res.status(400).send(err));
 });
 
 module.exports = router;
