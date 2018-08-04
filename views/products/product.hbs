@@ -3,6 +3,8 @@
   <div>Id: {{id}}</div>
   <div>Price: {{price}}</div>
   <div>Inventory: {{inventory}}</div>
+  <div>Creation Date: {{created_at}}</div>
+  <div>Last updated: {{updated_at}} </div>
 </div>
 <br>
 <form action='/products/{{id}}/edit?_method=GET' method='POST'>
@@ -10,6 +12,7 @@
   <input type='hidden' name='name' value={{name}}>
   <input type='hidden' name='price' value={{price}}>
   <input type='hidden' name='inventory' value={{inventory}}>
+  <!-- Updated and created -->
   <input type='submit' value='Edit'>
 </form>
 <br>

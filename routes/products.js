@@ -13,12 +13,12 @@ router.get('/', (req, res) => {
     .catch(err => res.status(400).send(err));
 });
 
-// Working on this
+// 
 router.get('/:product_id', (req, res) => {
   const id = req.params.product_id;
-  knex('products').where('id', id)
+  knex('products').where('id', id).first()
     .then(fetchedProduct => {
-      res.render('products/product', fetchedProduct[0]);
+      res.render('products/product', fetchedProduct);
     })
     .catch(err => res.status(400).send(err));
 
@@ -36,6 +36,25 @@ router.post('/', payload.productReqCheck, (req, res) => {
   knex('products').insert(products)
   .then(() => {
     res.redirect('/products');
+  })
+  .catch(err => res.status(400).send(err));
+});
+
+// WORKING ON
+router.put('/:product_id', payload.productReqCheck, (req, res) => {
+  //Need to catch payload error
+  const id = req.params.product_id;
+  const products = {
+    'name': req.body.name,
+    'price': parseFloat(req.body.price),
+    'inventory': parseInt(req.body.inventory),
+    'updated_at': new Date().toISOString()
+  };
+
+  knex('products').update(products).where('id', id)
+  .then(result => {
+    console.log('put result: ', result);
+    res.redirect('/products/product');
   })
   .catch(err => res.status(400).send(err));
 });
