@@ -13,14 +13,18 @@ router.get('/', (req, res) => {
     .catch(err => res.status(400).send(err));
 });
 
-// 
+// returns a product matching the id
 router.get('/:product_id', (req, res) => {
   const id = req.params.product_id;
   knex('products').where('id', id).first()
     .then(fetchedProduct => {
+      if(!fetchedProduct) {
+        throw Error();
+      }
+
       res.render('products/product', fetchedProduct);
     })
-    .catch(err => res.status(400).send(err));
+    .catch(err => res.status(400).send('Product does not exist'));
 
 });
 
@@ -40,21 +44,21 @@ router.post('/', payload.productReqCheck, (req, res) => {
   .catch(err => res.status(400).send(err));
 });
 
-// WORKING ON
+// Edit a product after the id is validated
 router.put('/:product_id', payload.productReqCheck, (req, res) => {
   //Need to catch payload error
-  const id = req.params.product_id;
+  const id = req.body.id;
   const products = {
+    'id': id,
     'name': req.body.name,
     'price': parseFloat(req.body.price),
     'inventory': parseInt(req.body.inventory),
-    'updated_at': new Date().toISOString()
+    'updated_at': knex.fn.now()
   };
 
   knex('products').update(products).where('id', id)
-  .then(result => {
-    console.log('put result: ', result);
-    res.redirect('/products/product');
+  .then(() => {
+    res.redirect(`/products/${id}`);
   })
   .catch(err => res.status(400).send(err));
 });
