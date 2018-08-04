@@ -19,12 +19,12 @@ router.get('/:product_id', (req, res) => {
   knex('products').where('id', id).first()
     .then(fetchedProduct => {
       if(!fetchedProduct) {
-        throw Error();
+        throw Error('Product does not exist');
       }
 
       res.render('products/product', fetchedProduct);
     })
-    .catch(err => res.status(400).send('Product does not exist'));
+    .catch(err => res.status(400).send(err.message));
 
 });
 
@@ -44,7 +44,7 @@ router.post('/', payload.productReqCheck, (req, res) => {
   .catch(err => res.status(400).send(err));
 });
 
-// Edit a product after the id is validated
+// edit a product after the id is validated
 router.put('/:product_id', payload.productReqCheck, (req, res) => {
   //Need to catch payload error
   const id = req.body.id;
@@ -56,11 +56,26 @@ router.put('/:product_id', payload.productReqCheck, (req, res) => {
     'updated_at': knex.fn.now()
   };
 
-  knex('products').update(products).where('id', id)
+  knex('products').update(products).where('id', id) // update doesn't return anything
   .then(() => {
     res.redirect(`/products/${id}`);
   })
   .catch(err => res.status(400).send(err));
+});
+
+// delete product by id
+router.delete('/:product_id', (req, res) => {
+  const id = req.params.product_id;
+
+  knex('products').where('id', id).del()
+    .then(removed => {
+      if(!removed) {
+        throw Error('Product does not exist');
+      }
+
+      res.redirect('/products');
+    })
+    .catch(err => res.status(400).send(err.message));
 });
 
 module.exports = router;
