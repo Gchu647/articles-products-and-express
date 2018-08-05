@@ -14,3 +14,16 @@ CREATE TABLE products (
 --Temp data
 INSERT INTO products (name, price, inventory)
 VALUEs ('chocolate', 10.25, 3);
+
+CREATE TABLE articles (
+  title varchar(255) NOT NULL,
+  body text NOT NULL,
+  author varchar(100) NOT NULL,
+  urlTitle varchar(500) NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+--Temp data
+INSERT INTO articles (title, body, author, urlTitle)
+VALUEs ('The Last Lecture', 'Follow your childhood dream ...', 'Randy Pausch', 'The%20Last%20Lecture');
