@@ -25,5 +25,5 @@ CREATE TABLE articles (
 );
 
 --Temp data
-INSERT INTO articles (title, body, author, urlTitle)
+INSERT INTO articles (title, body, author, urltitle)
 VALUEs ('The Last Lecture', 'Follow your childhood dream ...', 'Randy Pausch', 'The%20Last%20Lecture');

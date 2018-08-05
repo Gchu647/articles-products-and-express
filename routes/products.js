@@ -1,6 +1,5 @@
 const express = require('express'); 
 const router = express.Router();
-// const products = require('../db/db-products');
 const payload = require('../middleware/payload');
 const knex = require('../db/knex');
 
@@ -43,13 +42,13 @@ router.post('/', payload.productReqCheck, (req, res) => {
     res.inputError.showContent = true;
     res.render('products/new',res.inputError);
   } else {
-    const products = {
+    const product = {
       'name': req.body.name,
       'price': parseFloat(req.body.price),
       'inventory': parseInt(req.body.inventory)
     };
 
-    knex('products').insert(products)
+    knex('products').insert(product)
     .then(() => {
       res.redirect('/products');
     })
