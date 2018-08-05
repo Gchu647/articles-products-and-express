@@ -10,26 +10,26 @@ function productReqCheck(req, res, next) {
   const priceCheck = (req.body.price && !isNaN(req.body.price));
   const inventoryCheck = (req.body.inventory && !isNaN(req.body.inventory));
 
-  res.inputError = {'errorMessage': ''};
+  res.inputError = {'message': ''};
 
   if(req.method === 'POST' && idCheck) {
-    res.inputError.errorMessage += ' • Ids are automatically generated \r\n';
+    res.inputError.message += ' • Ids are automatically generated <br>';
   }
   
   if (req.method === 'PUT' && !idCheck) {
-    res.inputError.errorMessage += ' • Needs proper id key and value \r\n';
+    res.inputError.message += ' • Needs proper id key and value <br>';
   }
   
   if(!nameCheck) {
-    res.inputError.errorMessage += ' • Needs proper name key and value \r\n';
+    res.inputError.message += ' • Needs proper name key and value <br>';
   } 
   
   if(!priceCheck) {
-    res.inputError.errorMessage += ' • Needs proper price key and value \r\n';
+    res.inputError.message += ' • Needs proper price key and value <br>';
   }  
   
   if (!inventoryCheck) {
-    res.inputError.errorMessage += ' • Needs proper invetory key and value \r\n';
+    res.inputError.message += ' • Needs proper invetory key and value <br>';
   }
 
   next();
@@ -41,18 +41,18 @@ function articleReqCheck(req, res, next) {
   const bodyCheck = (req.body.body && typeof req.body.body === 'string');
   const authorCheck = (req.body.author && typeof req.body.author === 'string');
 
-  res.inputError = {'errorMessage': ''};
+  res.inputError = {'message': ''};
 
   if(!titleCheck) {
-    res.inputError.errorMessage += ' • Needs proper title key and value \r\n';
+    res.inputError.message += ' • Needs proper title key and value <br>';
   } 
   
   if(!bodyCheck) {
-    res.inputError.errorMessage += ' • Needs proper body key and value \r\n';
+    res.inputError.message += ' • Needs proper body key and value <br>';
   }  
   
   if (!authorCheck) {
-    res.inputError.errorMessage += ' • Needs proper author key and value \r\n';
+    res.inputError.message += ' • Needs proper author key and value <br>';
   }
 
   next();
