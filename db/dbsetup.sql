@@ -19,7 +19,7 @@ CREATE TABLE articles (
   title varchar(255) NOT NULL,
   body text NOT NULL,
   author varchar(100) NOT NULL,
-  urlTitle varchar(500) NOT NULL,
+  urltitle varchar(500) NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
