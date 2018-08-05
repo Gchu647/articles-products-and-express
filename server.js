@@ -24,10 +24,7 @@ app.use('/articles', articles);
 
 //--------------------------------------------------------------------//
 app.get('*', (req, res) => {
-  res.status(404).render('404',{
-    'showNote': true,
-    'note': 'Note: Wrong Route!'
-  });
+  res.status(404).render('404',{'message': 'Page not found!'});
 });
 
 app.use(function(err, req, res, next) {

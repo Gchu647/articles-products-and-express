@@ -10,12 +10,18 @@ router.get('/', (req, res) => {
     .then(products => {
       res.render('products/index', {collection: products});
     })
-    .catch(err => res.status(400).send(err));
+    .catch(err => res.status(404).render('404',{'message': err.message}));
 });
 
+// the page to post your products
 router.get('/new', (req, res) => {
   res.render('products/new');
 })
+
+// the page to edit your products
+router.get('/:product_id/edit', (req, res) => {
+  res.render('products/edit', req.body);
+}) 
 
 // returns a product matching the id
 router.get('/:product_id', (req, res) => {
@@ -23,18 +29,19 @@ router.get('/:product_id', (req, res) => {
   knex('products').where('id', id).first()
     .then(fetchedProduct => {
       if(!fetchedProduct) {
-        throw Error('Product does not exist');
+        throw Error('Product not Found!');
       }
 
       res.render('products/product', fetchedProduct);
     })
-    .catch(err => res.status(400).send(err.message));
+    .catch(err => res.status(404).render('404',{'message': err.message}));
 });
 
 // add a new product to our collection after the product is validated
 router.post('/', payload.productReqCheck, (req, res) => {
   if(res.inputError.message.length > 0) { // initial error check
-    res.status(400).send(res.inputError.message); 
+    res.inputError.showContent = true;
+    res.render('products/new',res.inputError);
   } else {
     const products = {
       'name': req.body.name,
@@ -46,14 +53,14 @@ router.post('/', payload.productReqCheck, (req, res) => {
     .then(() => {
       res.redirect('/products');
     })
-    .catch(err => res.status(400).send(err));
+    .catch(err => res.status(404).render('404',{'message': err.message}));
   }
 });
 
 // edit a product after the id is validated
 router.put('/:product_id', payload.productReqCheck, (req, res) => {
   if(res.inputError.message.length > 0) { // initial error check
-    res.status(400).send(res.inputError.message); 
+    res.status(400).send(res.inputError.message); // redirect page in the works
   } else {
     const id = req.body.id;
     const products = {
@@ -68,7 +75,7 @@ router.put('/:product_id', payload.productReqCheck, (req, res) => {
     .then(() => {
       res.redirect(`/products/${id}`);
     })
-    .catch(err => res.status(400).send(err)); 
+    .catch(err => res.status(404).render('404',{'message': err.message})); 
   }
 });
 
@@ -84,7 +91,7 @@ router.delete('/:product_id', (req, res) => {
 
       res.redirect('/products');
     })
-    .catch(err => res.status(400).send(err.message));
+    .catch(err => res.status(404).render('404',{'message': err.message}));
 });
 
 module.exports = router;
