@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const methodOveride = require('method-override');
 const products = require('./routes/products.js');
 const articles = require('./routes/articles.js');
-const PORT = process.env.PORT || 8060;
+const PORT = process.env.PORT || 8080;
 
 app.use(bodyParser.urlencoded({extended: true }));
 app.use(methodOveride('_method'));
